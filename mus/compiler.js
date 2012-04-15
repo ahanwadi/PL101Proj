@@ -1,11 +1,16 @@
 var c2i = {
 	a: 9,
+	'a#':10,
 	b: 11,
 	c: 0,
+	'c#': 1,
 	d: 2,
+	'd#': 3,
 	e: 4,
 	f: 5,
+	'f#':6,
 	g: 7,
+	'g#':8,
 	0: 0,
 	1: 1,
 	2: 2,
@@ -18,8 +23,8 @@ var c2i = {
 };
 
 var note2midi = function(notename) {
-	note = c2i[notename[0]];
-	octave = c2i[notename[1]];
+	note = c2i[notename.slice(0,-1)];
+	octave = c2i[notename.slice(-1)];
 	return 12 + octave * 12 + note;
 };
 
@@ -74,7 +79,7 @@ var musexpr = { tag: 'par',
 	left: { tag: 'note', pitch: 'c4', dur: 250 },
 	right: { tag: 'par',
 		left: { tag: 'note', pitch: 'e4', dur: 250 },
-		right: { tag: 'note', pitch: 'g4', dur: 250 } } };
+		right: { tag: 'note', pitch: 'g#4', dur: 250 } } };
 
 var remusexpr = { tag: 'repeat', section: musexpr, count: 3 };
 
