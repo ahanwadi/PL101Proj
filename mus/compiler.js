@@ -1,7 +1,32 @@
+var c2i = {
+	a: 9,
+	b: 11,
+	c: 0,
+	d: 2,
+	e: 4,
+	f: 5,
+	g: 7,
+	0: 0,
+	1: 1,
+	2: 2,
+	3: 3,
+	4: 4,
+	5: 5,
+	6: 6,
+	7: 7,
+	8: 8
+};
+
+var note2midi = function(notename) {
+	note = c2i[notename[0]];
+	octave = c2i[notename[1]];
+	return 12 + octave * 12 + note;
+};
+
 var compile = function(musexpr) {
 	var compileT = function(time, expr) {
 		if (expr.tag === 'note')
-			return [{ tag: 'note', dur: expr.dur, pitch: expr.pitch, start: time }];
+			return [{ tag: 'note', dur: expr.dur, pitch: note2midi(expr.pitch), start: time }];
 		if (expr.tag === 'rest') {
 			return [{tag: 'rest', dur: expr.duration, start: time}];
 		}
@@ -32,7 +57,7 @@ var musexpr = { tag: 'par',
 	left: { tag: 'note', pitch: 'c4', dur: 250 },
 	right: { tag: 'par',
 		left: { tag: 'note', pitch: 'e4', dur: 250 },
-		right: { tag: 'rest', duration: 250 } } };
+		right: { tag: 'note', pitch: 'g4', dur: 250 } } };
 
 console.log(musexpr);
 
