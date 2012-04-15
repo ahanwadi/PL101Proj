@@ -7,22 +7,30 @@ var compile = function(musexpr) {
 			var et = endTime(time, expr.left);
 			return l.concat(compileT(et, expr.right));
 		}
+		if (expr.tag === 'par') {
+			return compileT(time, expr.left).concat(compileT(time, expr.right));
+		}
 	};
 	return compileT(0, musexpr);
 };
 
-var musexpr = { tag: 'seq',
-	left: { tag: 'note', pitch: 'c4', dur: 250 },
-	right: { tag: 'seq',
-		left: { tag: 'note', pitch: 'e4', dur: 250 },
-		right: { tag: 'note', pitch: 'g4', dur: 500 } } };
-
-console.log(musexpr);
-
 var endTime = function(time, expr) {
 	if (expr.tag === 'note') return time + expr.dur;
 	if (expr.tag === 'seq') return time + endTime(0, expr.left) + endTime(0, expr.right);
+	if (expr.tag === 'par') {
+		l = endTime(time, expr.left);
+		r = endTime(time, expr.right);
+		return l > r ? l : r;
+	}
 };
+
+var musexpr = { tag: 'par',
+	left: { tag: 'note', pitch: 'c4', dur: 250 },
+	right: { tag: 'par',
+		left: { tag: 'note', pitch: 'e4', dur: 250 },
+		right: { tag: 'note', pitch: 'g4', dur: 250 } } };
+
+console.log(musexpr);
 
 console.log(endTime(0, musexpr));
 console.log(compile(musexpr));
