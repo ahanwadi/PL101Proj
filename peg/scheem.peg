@@ -16,6 +16,8 @@ expression = ignored a:atom
 	{ return a; }
         / el:exprlist
     	{ return el; }
+	/ "'" expr:expression
+	{ return ["quote", expr]; }
 
 comment = ";;" (!newline .)*
 newline = [\r\n]

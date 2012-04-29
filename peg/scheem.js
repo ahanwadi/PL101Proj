@@ -18,3 +18,4 @@ assert.deepEqual(parse("(+ 1 (f x 3 y))"),
 assert.deepEqual(parse("	abc"), "abc");
 assert.deepEqual(parse("\r\n abc"), "abc");
 assert.deepEqual(parse(";; testing comments\r\n atom"), "atom");
+assert.deepEqual(parse("'atom"), ["quote", "atom"]);
