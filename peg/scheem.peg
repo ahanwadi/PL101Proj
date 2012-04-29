@@ -1,18 +1,20 @@
 start =
-    expression
+	expression
 
 validchar = [0-9a-zA-Z_?!+\-=@#$%^&*/.]
 
-atom = chars:validchar+
+atom =  chars:validchar+
 	{ return chars.join("");}
-    
-spacedexpression = " "+ e:expression
+   
+whitespace = [ \t\n]
+
+spacedexpression = whitespace+ e:expression
 	{ return e; }
-    
-exprlist = "(" e:expression el:spacedexpression* ")"
+   
+exprlist = whitespace* "(" whitespace* e:expression el:spacedexpression* whitespace* ")" whitespace*
 	{ return [e].concat(el); }
-    
-expression = a:atom
-		{ return a; }
+ 
+expression = whitespace* a:atom
+	{ return a; }
         / el:exprlist
     	{ return el; }
