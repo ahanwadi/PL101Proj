@@ -5,16 +5,19 @@ validchar = [0-9a-zA-Z_?!+\-=@#$%^&*/.]
 
 atom =  chars:validchar+
 	{ return chars.join("");}
-   
-whitespace = [ \t\n]
-
+ 
 spacedexpression = whitespace+ e:expression
 	{ return e; }
    
-exprlist = whitespace* "(" whitespace* e:expression el:spacedexpression* whitespace* ")" whitespace*
+exprlist = ignored "(" ignored e:expression el:spacedexpression* ignored ")" ignored 
 	{ return [e].concat(el); }
  
-expression = whitespace* a:atom
+expression = ignored a:atom
 	{ return a; }
         / el:exprlist
     	{ return el; }
+
+comment = ";;" (!newline .)*
+newline = [\r\n]
+whitespace = [\t ]
+ignored = (newline / whitespace / comment)*
