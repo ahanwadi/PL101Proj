@@ -13,7 +13,7 @@ integer = digits: [0-9]+
 duration = "[" digits: integer "]"
 	{ return digits; }
 
-pitch = name:[a-g] sharp: "#"? o:[0-4]
+pitch = name:[a-g] sharp: "#"? o:[0-8]
 	{return name + sharp + o; }
 
 space = [ \t]

@@ -1,0 +1,11 @@
+Basic syntax for MUS is as follows:
+A note is specified as pitch[duration]. For example, a4[100].
+A rest is specified as [duration]. For example, [100]
+A sequential composition (melody) is specified using comma operator. For example, a4[100], a5[200].
+A parallel composition (harmony) is specified using the pipe ("|") operation. For example, a4[100] | a5[200]
+A repeatition is specified using the multipliction ("*") operator. For example, a4[100] * 3
+Grouping is done by enclosing an expression within parens. For example, (a4[100], a5[200])
+
+
+A full example:
+(([100], a4[200], a5[300] | a2[50])  * 5)
