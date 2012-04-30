@@ -4,11 +4,14 @@ start =
 note = p:pitch d:duration
 	{ return { tag: "note", pitch: p, dur: d}; }
 
-duration = "[" digits:[0-9]+ "]"
+integer = digits: [0-9]+
 	{ return parseInt(digits.join("")); }
 
-pitch = name:[a-g] o:[0-4]
-	{return name + o; }
+duration = "[" digits: integer "]"
+	{ return digits; }
+
+pitch = name:[a-g] sharp: "#"? o:[0-4]
+	{return name + sharp + o; }
 
 space = [ \t]
 
@@ -20,9 +23,15 @@ sequence =
 
 
 parallel =
-	left:primary space* "|" space* right: parallel
+	left:repeatition space* "|" space* right: parallel
 	{ return { tag: "par", left: left, right: right}; }
-	/ primary
+	/ repeatition
+
+repeatition =
+	left: primary space* "*" space* count: integer 
+	{ return { tag: "repeat", section: left, count: count }; }
+	/
+	primary
 
 primary =
 	note

@@ -14,3 +14,5 @@ assert.deepEqual(parse("a4[100]", "note"), { tag: "note", pitch: "a4", dur:100})
 assert.deepEqual(parse("(a4[100], a3[200])"), { tag: "seq", left: { tag: "note", pitch: "a4", dur:100 }, right: { tag: "note", pitch: "a3", dur:200 } });
 
 assert.deepEqual(parse("(a4[100], a3[200] | a4[40])"), { tag: "seq", left: {tag: "note", pitch: "a4", dur: 100 }, right: { tag: "par", left: { tag: "note", pitch: "a3", dur:200 }, right: { tag: "note", pitch: "a4", dur:40 } } });
+
+assert.deepEqual(parse("(a4[100], a3[200] * 3)"), { tag: "seq", left: {tag: "note", pitch: "a4", dur: 100 }, right: { tag: "repeat", section: { tag: "note", pitch: "a3", dur:200 }, count: 3 } });
