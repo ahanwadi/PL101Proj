@@ -3,6 +3,9 @@ start =
 
 note = p:pitch d:duration
 	{ return { tag: "note", pitch: p, dur: d}; }
+	/
+	d:duration
+	{ return { tag: "rest", duration: d}; }
 
 integer = digits: [0-9]+
 	{ return parseInt(digits.join("")); }
