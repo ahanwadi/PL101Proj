@@ -1,0 +1,30 @@
+start =
+	sequence
+
+note = p:pitch d:duration
+	{ return { tag: "note", pitch: p, dur: d}; }
+
+duration = "[" digits:[0-9]+ "]"
+	{ return parseInt(digits.join("")); }
+
+pitch = name:[a-g] o:[0-4]
+	{return name + o; }
+
+space = [ \t]
+
+
+sequence =
+     left: parallel "," space* right: sequence
+      { return { tag: "seq", left: left, right: right}; }
+      / parallel
+
+
+parallel =
+	left:primary space* "|" space* right: parallel
+	{ return { tag: "par", left: left, right: right}; }
+	/ primary
+
+primary =
+	note
+	/ "(" sequence: sequence ")"
+	{ return sequence; }
